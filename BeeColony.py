@@ -1,46 +1,71 @@
-# from EliteBee import *
 from ScoutBee import *
+from EliteBee import *
+from WorkerBee import *
+from ListGen import *
+
 import time
+import random
 
-threads = []
+classListPermutations = 1000
 
-thread1 = EliteBee(50)
-thread2 = ScoutBee(0)
-# thread3 = ScoutBee(0)
-# thread4 = ScoutBee(0)
-# thread5 = ScoutBee(0)
-# thread6 = ScoutBee(0)
-# thread7 = ScoutBee(0)
+scouts
+elites
+workers
 
-thread1.setDaemon(True)
-thread2.setDaemon(True)
-# thread3.setDaemon(True)
-# thread4.setDaemon(True)
-# thread5.setDaemon(True)
-# thread6.setDaemon(True)
-# thread7.setDaemon(True)
+populationSize=100
+optimumFitness=0.0
+limit=0
+MAX_LIMIT=100
+count=0
 
-thread1.start()
-thread2.start()
-# thread3.start()
-# thread4.start()
-# thread5.start()
-# thread6.start()
-# thread7.start()
+#generate pop of classListPermutations
+classList=ListGen(classListPermutations)
+classList.run()
 
-threads.append(thread1)
-threads.append(thread2)
-# threads.append(thread3)
-# threads.append(thread4)
-# threads.append(thread5)
-# threads.append(thread6)
-# threads.append(thread7)
+elitePopulation=0
+eliteRatio=0
+scoutPopulation=0
+scoutRatio=0
+workerPopulation=0
+workerRatio=0
 
-print "Main thread waiting!", time.ctime()
+while (optimumFitness != 1.0) and (limit<MAX_LIMIT):
+    chance=random.random()
+    
+    if count==0 :
+        #first iteration has 100%scouts to find schedules
+        scoutRatio = 1.0
+        eliteRatio = 0.0
+        workerRatio = 0.0
+    else:
+        #generate normal ratios
+        scoutRatio = populationSize/scout_schedules.qsize()
+        remaining = 1.0-scoutRatio
+        eliteRatio = (1-optimumFitness)*remaining
+        
+    
+    scoutPopulation = round(populationSize*scoutRatio)
+    elitePopulation = round(populationSize*eliteRatio)
+    workerPopulation = 100 - scoutPopulatio - elitePopulation
+    
+    scouts=ScoutBee(scoutPopulation)
+    elites=EliteBee(elitePopulation)
+    workers=WorkerBee(workerPopulation)
+    
+    
 
-for thread in threads:
-    thread.join()
+    
+    
+print list_schedules.get(False)
 
+
+
+#TODO - generate world (lists)
+
+#TODO - generate initial bee pop
+
+#TODO - run sim
+    
 # while True:
 #     print scout_schedules.qsize()
 #     if scout_schedules.qsize() == 0:

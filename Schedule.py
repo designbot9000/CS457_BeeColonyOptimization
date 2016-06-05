@@ -1,4 +1,4 @@
-from Class import *
+from Course import *
 
 REQUIRED_CREDITS = 106
 
