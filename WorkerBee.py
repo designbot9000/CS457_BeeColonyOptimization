@@ -46,21 +46,22 @@ class WorkerBee():
     
     def optimize_schedule(schedule):
         global optimum_fitness
+        attempts=0
         for course in schedule:
-                schedule.sort()
-                if(random.random()>0.5):
-                    session_options=course.get_sessions()
-                    schedule.drop_session(course)
-                    #choose random session from available sessions
-                    randIndex=random.randint(0,len(session_options))
-                    new_course=session_options[randIndex]
-                    schedule.add_session(new_course)
-                    meets_prereqs=schedule.check_prereqs(course.course)
-                    if(meets_prereqs>0):
-                        schedule.drop_session(new_course)
-                        schedule.add_session(course)
-                        optimize_schedule(schedule)
-                    
-                        
+                if(attempts<MAX_ATTEMPTS):
+                    schedule.sort()
+                    if(random.random()>0.5):
+                        session_options=course.get_sessions()
+                        schedule.drop_session(course)
+                        #choose random session from available sessions
+                        randIndex=random.randint(0,len(session_options))
+                        new_course=session_options[randIndex]
+                        meets_prereqs=schedule.add_session(new_course)
+                        if(meets_prereqs==False):
+                            schedule.drop_session(new_course)
+                            schedule.add_session(course)
+                            optimize_schedule(schedule)
+                else:
+                    break              
                         
         return schedule
