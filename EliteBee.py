@@ -6,7 +6,7 @@ import Queue
 Elite Bee's job is to pick, at random, a schedule that the scouts "find"
 '''
 
-elite_schedules = list()
+elite_schedules= list()
 
 class EliteBee():
     
@@ -20,8 +20,8 @@ class EliteBee():
         while self.iterations > 0:
             #check the total amount of credits taken
             selected_schedule=scout_schedules.get(False)
-            selected_schedule.check_fitness()            
-            insert_schedule(selected_schedule);
+            #selected_schedule.check_fitness()            
+            self.insert_schedule(selected_schedule);
             self.iterations -= 1
     
     def insert_schedule(self,schedule):
