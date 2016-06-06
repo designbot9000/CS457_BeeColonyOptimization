@@ -46,7 +46,7 @@ while (optimum_fitness != 1.0) and (limit<MAX_LIMIT):
         workerRatio = 0.0
     else:
         #generate normal ratios
-        scoutRatio = population_size/scout_schedules.qsize()
+        scoutRatio = (population_size + 0.0)/(scout_schedules.qsize() + 0.0)
         remaining = 1.0-scoutRatio
         eliteRatio = (1-optimum_fitness)*remaining
         
