@@ -9,14 +9,14 @@ import random
 Scout bee generates schedule (a possible solution) from randomly chosen lists  
 '''
 scout_schedules = Queue.PriorityQueue()
-MAX_SCOUT_ATTEMPTS = 3000 
+MAX_SCOUT_ATTEMPTS = 4000 
 
 
 class ScoutBee():
-    def __init__(self, iterations):
-        self.iterations = iterations
+    def __init__(self):
+        self.iterations = 0
 
-    def run(self):
+    def run(self, iterations):
         #time.sleep(0.5)
         global list_schedules
         while True:

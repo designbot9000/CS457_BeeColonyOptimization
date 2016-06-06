@@ -44,18 +44,23 @@ class Schedule:
         return self.quarter
 
     def add_session(self, session):
-        print "trying to add {}".format(session)
-        print session.course.credits
+        #print "trying to add {}".format(session)
+        #print session.course.credits
         sessions = self.get_sessions(self.quarter)
-        print sessions[0].course.credits
+            #print sessions[0].course.credits
         creds = 0
-        for item in sessions:
-            creds += item.course.credits
-        print creds
-        if  (self.maxCreditsPerQuarter - creds) <= session.course.credits:
+        if len(sessions) > 0:
+            for item in sessions:
+                #print item.course.credits
+                creds += item.course.credits
+        #print creds
+        #print self.maxCreditsPerQuarter - creds
+        if  (self.maxCreditsPerQuarter - creds) >= session.course.credits and session.get_quarter() >= self.quarter:
+            print "adding: {}".format(session)
             self.schedule.append(session)
             return True
         else:
+            self.quarter += 1
             return False
 
     def drop_session(self, session):

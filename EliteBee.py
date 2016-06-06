@@ -1,4 +1,5 @@
 from Schedule import *
+from ScoutBee import *
 import random
 import Queue
 '''
@@ -9,11 +10,12 @@ elite_schedules = list()
 
 class EliteBee():
     
-    def __init__(self, iterations):
-        self.iterations = iterations
+    def __init__(self):
+        self.iterations = 0
 
-    def run(self):
+    def run(self, iterations):
         global scout_schedules
+        self.iterations = iterations
         #while there are still Elite Bees in the Population
         while self.iterations > 0:
             #check the total amount of credits taken

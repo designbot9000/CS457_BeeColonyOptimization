@@ -264,7 +264,7 @@ cs489.session(Session(6, Lulofs))
 cs489.session(Session(8, ))
 cs489.session(Session(9, ))
 
-cs492 = Course('cs492', 2, None, True, 0)
+cs492 = Course('cs492', 2, [cs392], True, 0)
 cs492.session(Session(1, unknown))
 cs492.session(Session(2, unknown))
 cs492.session(Session(3, unknown))
@@ -315,7 +315,7 @@ cs367.session(Session(9, ))
 # cs375 = Course('cs375', 4, [cs301], False, 0)
 
 cs440 = Course('cs440', 4, [cs302], False, 0)
-cs440.session(Session(4, kovalerchuk))
+cs440.session(Session(4, Kovalerchuk))
 
 cs441 = Course('cs441', 4, [cs440], False, 0)
 cs441.session(Session(2, ))
@@ -329,8 +329,8 @@ cs450 = Course('cs450', 4, [cs301], False, 0)
 cs450.session(Session(4, ))
 
 cs455 = Course('cs455', 4, [cs302], False, 0)
-cs455.session(Session(1, kovalerchuk))
-cs455.session(Session(7, kovalerchuk))
+cs455.session(Session(1, Kovalerchuk))
+cs455.session(Session(7, Kovalerchuk))
 
 # cs460 = Course('cs460', 4, [cs301], False, 0)
 
@@ -346,7 +346,7 @@ cs473.session(Session(5, ))
 # cs430 = Course('cs430', 4, None, False, 0)
 
 cs471 = Course('cs471', 4, None, False, 0)
-cs471.session(Session(1, davendra))
+cs471.session(Session(1, Davendra))
 
 # cs475 = Course('cs475', 4, None, False, 0)
 

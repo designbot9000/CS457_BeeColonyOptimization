@@ -9,7 +9,7 @@ Created on Sat Jun 04 15:34:10 2016
 Work Bee's follow the Elite bee's decision and try to optimize the schedule. 
 '''
 
-
+from ScoutBee import *
 from EliteBee import *
 import random
 import Queue
@@ -19,12 +19,15 @@ Elite Bee's job is to pick, at random, a schedule that the scouts "find"
 # selects an Elite Bee from the Population to modify a schedule that it holds
 
 #randomness constant, allows bees to choose randomly, within a certain range
-selection_size=round(len(elite_schedules)*(1-optimum_fitness),0)
 class WorkerBee():
-    def __init__(self, iterations):
-        self.iterations = iterations
+    def __init__(self):
+        self.iterations = 0
 
-    def run(self):
+    def run(self, iterations, optimum_fitness):
+        global elite_schedules
+        self.iterations = iterations
+        selection_size=round(len(elite_schedules)*(1-optimum_fitness),0)
+
         #while there are still Worker Bees in the Population
         while self.iterations > 0:
             #Randomly select Elite bee based on proportional score
@@ -37,7 +40,7 @@ class WorkerBee():
             self.iterations-=1
     
     def optimize_schedule(schedule):
-        
+        global optimum_fitness
         for course in schedule:
                 schedule.sort()
                 if(random.random()>0.5):
