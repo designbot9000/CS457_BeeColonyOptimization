@@ -45,7 +45,8 @@ class ScoutBee():
                 else:
                     designated_schedule.appendleft(course_to_evaluate)
                 attempts += 1
-
+            #set the fitness for the sched
+            new_schedule.check_fitness(4, 3, 2, 1)  
             #sort new schedule based on time taken
             new_schedule.sort()
             #add to Schedule queue

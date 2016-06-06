@@ -1,4 +1,5 @@
 from Course import *
+import time
 
 REQUIRED_CREDITS = 106
 
@@ -9,6 +10,7 @@ class Schedule:
         self.maxCreditsPerQuarter = 18
         self.maxQuarters = 9
         self.quarter = 1
+        self.creditsFulfilled = 0
         self.fitness = 0
         self.schedule = list()
 
@@ -25,7 +27,25 @@ class Schedule:
             int: returns an int with higher numbers representing a higher satisfaction
             based on the provided weights.
         """
-        return 0
+        weightProfessor = weightProfessor + 0.0
+        weightCourse = weightCourse + 0.0
+        weightCompletion = weightCompletion + 0.0
+        weightCredit = weightCredit + 0.0
+        total_score = 0
+        weight = weightProfessor + weightCompletion
+        prof_ = 0
+        course_ = 0
+        complete_ = (self.creditsFulfilled +0.0)/(REQUIRED_CREDITS +0.0)*(weightCompletion/weight)
+        credit_ = 0
+        
+        for item in self.schedule:
+            prof_ += item.get_professor().get_rating()
+        prof_ = ((prof_/len(self.schedule))/5.0 )*(weightProfessor/weight)
+        #print "prof {}".format(prof_)
+        #print "complete {}".format(complete_)
+        total_score = prof_+complete_
+        self.fitness = total_score#/1000
+        return total_score
 
     def check_prereqs(self, course):
         #checks to see if course has a prereq
@@ -53,14 +73,16 @@ class Schedule:
             for item in sessions:
                 #print item.course.credits
                 creds += item.course.credits
-        #print creds
-        #print self.maxCreditsPerQuarter - creds
+        #print "quarter {} credits taken: {}".format(self.quarter, creds)
+        #print "session quarter: {}".format(session.quarter)
         if  (self.maxCreditsPerQuarter - creds) >= session.course.credits and session.get_quarter() >= self.quarter:
-            print "adding: {}".format(session)
+            #print "adding: {}".format(session)
+            self.creditsFulfilled += session.course.credits
             self.schedule.append(session)
             return True
         else:
-            self.quarter += 1
+            if self.maxCreditsPerQuarter - creds < 4:
+                self.quarter += 1
             return False
 
     def drop_session(self, session):
