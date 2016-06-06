@@ -28,18 +28,20 @@ class ScoutBee():
             #grab a course list from the list queue
             sched = list_schedules.get()
             designated_schedule = deque(sched)
-            print "starting schedule generation on list:"
+            #print "starting schedule generation on list:"
             msg = ""
+            '''
             for item in sched:
                 print item
-            print msg
+            '''
+            #print msg
             #create a new schedule based off of class list
             new_schedule = Schedule(2016, 1)
             attempts = 0
             #check if schedule is valid, and if it wont validate after MAX times, give up            
             while (attempts < MAX_SCOUT_ATTEMPTS) & (len(designated_schedule) > 0):
                 #select course to check  prereqs
-                course_to_evaluate = designated_schedule.pop()
+                course_to_evaluate = designated_schedule.popleft()
                 if new_schedule.check_prereqs(course_to_evaluate) == 0:
                     #only adding the 1st inputted session regardless of being the right quarter
                     i = 0
@@ -50,9 +52,9 @@ class ScoutBee():
                         else:
                             i += 1  
                 else:
-                    designated_schedule.appendleft(course_to_evaluate)
+                    designated_schedule.append(course_to_evaluate)
                 attempts += 1
-            print "adding new sched to list"
+            #print "adding new sched to list"
             #set the fitness for the sched
             new_schedule.check_fitness(4, 3, 2, 1)  
             #sort new schedule based on time taken

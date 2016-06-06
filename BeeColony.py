@@ -49,6 +49,7 @@ while (optimum_fitness != 1.0) and (limit<MAX_LIMIT):
         scoutRatio = (population_size + 0.0)/(scout_schedules.qsize() + 0.0)
         remaining = 1.0-scoutRatio
         eliteRatio = (1-optimum_fitness)*remaining
+        #pass
         
         
     
@@ -71,14 +72,14 @@ while (optimum_fitness != 1.0) and (limit<MAX_LIMIT):
     while loop > 0:   
         if scout_schedules.qsize() > 0:
             top_sched = scout_schedules.get(False)
-            scout_schedules.put(top_sched)
+            #scout_schedules.put(top_sched)
             scheduleQueue.put(top_sched)
             #print "fitness: {}".format(top_sched.fitness)
             credit = top_sched.creditsFulfilled
         
-            if credit >= 106:            
+            if credit >= 10:            
                 #print "fitness:"+str(top_sched.fitness)
-                if(top_sched.fitness>optimum_fitness):
+                if(top_sched.fitness>=optimum_fitness):
                     optimum_fitness=top_sched.fitness
                     optimum_schedule=top_sched
                     for item in sched:
@@ -104,7 +105,7 @@ while (optimum_fitness != 1.0) and (limit<MAX_LIMIT):
 print "optimum_schedule"
 print optimum_schedule.fitness
 for item in optimum_schedule.get_schedule():
-    print item
+        print item
 
 #TODO - generate world (lists)
 
