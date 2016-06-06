@@ -14,7 +14,8 @@ from EliteBee import *
 import random
 import Queue
 '''
-Elite Bee's job is to pick, at random, a schedule that the scouts "find"
+Worker Bee takes a schedule, and swaps out schedule sessions in attempt to 
+improve fitness
 '''
 # selects an Elite Bee from the Population to modify a schedule that it holds
 
@@ -31,13 +32,17 @@ class WorkerBee():
         #while there are still Worker Bees in the Population
         while self.iterations > 0:
             #Randomly select Elite bee based on proportional score
-            index=random.randint(0,selection_size)
-            schedule=EliteBee.elite_schedules[index]        
-            #optimize the schedule
-            optimum_schedule=optimize_schedule(schedule)
-            #place in ready queue for elites to pull from
-            scout_schedules.append(optimum_schedule)
-            self.iterations-=1
+            if(selection_size==0):
+                break
+            else:
+                index=random.randint(0,selection_size-1)
+                schedule=elite_schedules[index]        
+                #optimize the schedule
+                optimum_schedule=optimize_schedule(schedule)
+                #place in ready queue for elites to pull from
+                optimum_schedule.check_fitness(4,3,2,1)
+                scout_schedules.append(optimum_schedule)
+                self.iterations-=1
     
     def optimize_schedule(schedule):
         global optimum_fitness
