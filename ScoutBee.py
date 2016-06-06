@@ -1,5 +1,6 @@
 
-
+from Schedule import *
+from ListGen import *
 import Queue
 from collections import deque
 import time
@@ -16,12 +17,13 @@ class ScoutBee():
         self.iterations = iterations
 
     def run(self):
-        time.sleep(0.5)
+        #time.sleep(0.5)
+        global list_schedules
         while True:
             #check if list is empty; true = do nothing, or prompt ListGenerator to make new List
             if list_schedules.empty():
                 break
-            #grab a schedule from the list queue
+            #grab a course list from the list queue
             designated_schedule = deque(list_schedules.get())
             #create a new schedule based off of class list
             new_schedule = Schedule(2016, 1)
@@ -31,7 +33,15 @@ class ScoutBee():
                 #select course to check  prereqs
                 course_to_evaluate = designated_schedule.pop()
                 if new_schedule.check_prereqs(course_to_evaluate) == 0:
-                    new_schedule.add_session(course_to_evaluate.get_sessions()[0])
+                    #only adding the 1st inputted session regardless of being the right quarter
+                    i = 0
+                    while (True and i < len(course_to_evaluate.get_sessions())):
+                        response = new_schedule.add_session(course_to_evaluate.get_sessions()[i])
+                        if response == True:
+                            break
+                        else:
+                            i += 1
+                        
                 else:
                     designated_schedule.appendleft(course_to_evaluate)
                 attempts += 1

@@ -15,6 +15,7 @@ class ListGen():
         self.iterations = iterations
 
     def run(self):
+        global list_schedules
         while self.iterations > 0:
             #defines a list of courses starting with required courses
             selected_courses = list(Course.requiredCourses)

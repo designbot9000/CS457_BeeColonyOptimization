@@ -1,16 +1,21 @@
+from ListGen import *
 from ScoutBee import *
 from EliteBee import *
 from WorkerBee import *
-from ListGen import *
+
 
 import time
 import random
 
-classListPermutations = 1000
+'''
 
-scouts
-elites
-workers
+'''
+
+classListPermutations = 10
+
+scouts = None
+elites = None 
+workers = None
 
 populationSize=100
 optimumFitness=0.0
@@ -46,17 +51,23 @@ while (optimumFitness != 1.0) and (limit<MAX_LIMIT):
     
     scoutPopulation = round(populationSize*scoutRatio)
     elitePopulation = round(populationSize*eliteRatio)
-    workerPopulation = 100 - scoutPopulatio - elitePopulation
+    workerPopulation = 100 - scoutPopulation - elitePopulation
     
     scouts=ScoutBee(scoutPopulation)
+    scouts.run()
     elites=EliteBee(elitePopulation)
     workers=WorkerBee(workerPopulation)
+    limit += 1
     
     
 
     
     
-print list_schedules.get(False)
+print scout_schedules.qsize()
+top_sched =  scout_schedules.get(False)
+sched  = top_sched.get_schedule()
+for item in sched:
+    print item
 
 
 
