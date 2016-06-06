@@ -77,14 +77,7 @@ for item in sched:
 
 #TODO - run sim
     
-# while True:
-#     print scout_schedules.qsize()
-#     if scout_schedules.qsize() == 0:
-#         break
-#     output_schedule = scout_schedules.get()
-#     for session in output_schedule.get_sessions():
-#         print session
-#     print "\n\n"
 
 
-print "Exiting main thread!", time.ctime()
+
+#print "Exiting main thread!", time.ctime()

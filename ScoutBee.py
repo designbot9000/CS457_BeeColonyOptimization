@@ -9,7 +9,7 @@ import random
 Scout bee generates schedule (a possible solution) from randomly chosen lists  
 '''
 scout_schedules = Queue.PriorityQueue()
-MAX_SCOUT_ATTEMPTS = 3000
+MAX_SCOUT_ATTEMPTS = 3000 
 
 
 class ScoutBee():
