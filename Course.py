@@ -348,8 +348,9 @@ cs473.session(Session(5, ))
 
 # cs430 = Course('cs430', 4, None, False, 0)
 
-cs471 = Course('cs471', 4, None, False, 0)
+cs471 = Course('cs471', 4, [math330,cs302], False, 0)
 cs471.session(Session(1, Davendra))
+
 
 # cs475 = Course('cs475', 4, None, False, 0)
 

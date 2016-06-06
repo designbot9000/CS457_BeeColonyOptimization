@@ -11,7 +11,8 @@ import random
 
 '''
 
-classList_permutations = 50
+
+classList_permutations = 1000
 
 scouts = None
 elites = None 
@@ -51,7 +52,7 @@ while (optimumFitness != 1.0) and (limit<MAX_LIMIT):
     
     scoutPopulation = round(population_size*scoutRatio)
     elitePopulation = round(population_size*eliteRatio)
-    workerPopulation = 100 - scoutPopulation - elitePopulation
+    workerPopulation = population_size - scoutPopulation - elitePopulation
     
     scouts=ScoutBee()
     scouts.run(scoutPopulation)
@@ -74,14 +75,20 @@ while loop > 0:
     if scout_schedules.qsize() > 0:
         top_sched = scout_schedules.get(False)
         sched  = top_sched.get_schedule()
-        print "fitness: {}".format(top_sched.fitness)
+        #print "fitness: {}".format(top_sched.fitness)
         credit = top_sched.creditsFulfilled
+        '''        
         if credit >= 106:            
             print "scheduled credits: {}".format(credit)
             
             for item in sched:
                 print item
             loop -= 1
+        '''
+        print "scheduled credits: {}".format(credit)
+        for item in sched:
+            print item
+        loop -= 1
     else:
         break
 

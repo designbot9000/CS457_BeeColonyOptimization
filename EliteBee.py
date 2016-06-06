@@ -26,7 +26,7 @@ class EliteBee():
     
     def insert_schedule(self,schedule):
         #checks if selected schedule is higher fitness than the next schedule, and inserts it
-        global elite_schedules
+        elite_schedules
         index=0
         for item in elite_schedules:
             if(schedule.fitness<item.fitness):
