@@ -13,6 +13,8 @@ class Schedule:
         self.creditsFulfilled = 0
         self.fitness = 0
         self.schedule = list()
+    def __lt__( self, other):
+        return self.fitness > other.fitness
 
     def check_fitness(self, weightProfessor, weightCourse, weightCompletion, weightCredit):
         """Check the fitness of the current configuration

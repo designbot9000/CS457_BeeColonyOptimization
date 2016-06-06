@@ -12,7 +12,7 @@ import random
 '''
 
 
-classList_permutations = 1000
+classList_permutations = 20
 
 scouts = None
 elites = None 
@@ -68,14 +68,14 @@ while (optimumFitness != 1.0) and (limit<MAX_LIMIT):
     
 print scout_schedules.qsize()
 print "..."
-loop = 10
+loop = 20
 while loop > 0:
     
     
     if scout_schedules.qsize() > 0:
         top_sched = scout_schedules.get(False)
         sched  = top_sched.get_schedule()
-        #print "fitness: {}".format(top_sched.fitness)
+        print "fitness: {}".format(top_sched.fitness)
         credit = top_sched.creditsFulfilled
         '''        
         if credit >= 106:            
@@ -85,9 +85,9 @@ while loop > 0:
                 print item
             loop -= 1
         '''
-        print "scheduled credits: {}".format(credit)
-        for item in sched:
-            print item
+        #print "scheduled credits: {}".format(credit)
+        #for item in sched:
+            #print item
         loop -= 1
     else:
         break

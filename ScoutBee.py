@@ -20,12 +20,19 @@ class ScoutBee():
         #time.sleep(0.5)
         self.iterations = iterations
         global list_schedules
+        
         while iterations > 0:
             #check if list is empty; true = do nothing, or prompt ListGenerator to make new List
             if list_schedules.empty():
                 break
             #grab a course list from the list queue
-            designated_schedule = deque(list_schedules.get())
+            sched = list_schedules.get()
+            designated_schedule = deque(sched)
+            print "starting schedule generation on list:"
+            msg = ""
+            for item in sched:
+                print item
+            print msg
             #create a new schedule based off of class list
             new_schedule = Schedule(2016, 1)
             attempts = 0
@@ -45,12 +52,24 @@ class ScoutBee():
                 else:
                     designated_schedule.appendleft(course_to_evaluate)
                 attempts += 1
+            print "adding new sched to list"
+            #set the fitness for the sched
+            new_schedule.check_fitness(4, 3, 2, 1)  
+            #sort new schedule based on time taken
+            new_schedule.sort()
+            #add to Schedule queue
+            scout_schedules.put(new_schedule)
+            '''            
             if new_schedule.creditsFulfilled >= 106:
+                print "adding new sched to list"
                 #set the fitness for the sched
                 new_schedule.check_fitness(4, 3, 2, 1)  
                 #sort new schedule based on time taken
                 new_schedule.sort()
                 #add to Schedule queue
                 scout_schedules.put(new_schedule)
+            else:
+                print "sched not enough credits {}".format(new_schedule.creditsFulfilled)
+                '''
             iterations -= 1
 
