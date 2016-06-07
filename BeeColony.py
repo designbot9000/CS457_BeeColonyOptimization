@@ -69,7 +69,7 @@ while (optimum_fitness != 1.0) and (limit<MAX_LIMIT):
     print "..."
     loop = 100
     scheduleQueue=Queue.Queue()
-    while loop > 0:   
+    while scout_schedules.qsize() > 0:   
         if scout_schedules.qsize() > 0:
             top_sched = scout_schedules.get(False)
             #scout_schedules.put(top_sched)
@@ -82,7 +82,7 @@ while (optimum_fitness != 1.0) and (limit<MAX_LIMIT):
                 if(top_sched.fitness>=optimum_fitness):
                     optimum_fitness=top_sched.fitness
                     optimum_schedule=top_sched
-                    for item in sched:
+                    for item in top_sched.get_schedule():
                         #print item
                         pass
                     loop -= 1
