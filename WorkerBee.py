@@ -14,7 +14,8 @@ from EliteBee import *
 import random
 import Queue
 '''
-Elite Bee's job is to pick, at random, a schedule that the scouts "find"
+Worker Bee takes a schedule, and swaps out schedule sessions in attempt to 
+improve fitness
 '''
 # selects an Elite Bee from the Population to modify a schedule that it holds
 
@@ -31,31 +32,36 @@ class WorkerBee():
         #while there are still Worker Bees in the Population
         while self.iterations > 0:
             #Randomly select Elite bee based on proportional score
-            index=random.randint(0,selection_size)
-            schedule=EliteBee.elite_schedules[index]        
-            #optimize the schedule
-            optimum_schedule=optimize_schedule(schedule)
-            #place in ready queue for elites to pull from
-            scout_schedules.append(optimum_schedule)
-            self.iterations-=1
+            if(selection_size==0):
+                break
+            else:
+                index=random.randint(0,selection_size-1)
+                schedule=elite_schedules[index]        
+                #optimize the schedule
+                optimum_schedule=optimize_schedule(schedule)
+                #place in ready queue for elites to pull from
+                optimum_schedule.check_fitness(4,3,2,1)
+                scout_schedules.append(optimum_schedule)
+                self.iterations-=1
     
     def optimize_schedule(schedule):
         global optimum_fitness
+        attempts=0
         for course in schedule:
-                schedule.sort()
-                if(random.random()>0.5):
-                    session_options=course.get_sessions()
-                    schedule.drop_session(course)
-                    #choose random session from available sessions
-                    randIndex=random.randint(0,len(session_options))
-                    new_course=session_options[randIndex]
-                    schedule.add_session(new_course)
-                    meets_prereqs=schedule.check_prereqs(course.course)
-                    if(meets_prereqs>0):
-                        schedule.drop_session(new_course)
-                        schedule.add_session(course)
-                        optimize_schedule(schedule)
-                    
-                        
+                if(attempts<MAX_ATTEMPTS):
+                    schedule.sort()
+                    if(random.random()>0.5):
+                        session_options=course.get_sessions()
+                        schedule.drop_session(course)
+                        #choose random session from available sessions
+                        randIndex=random.randint(0,len(session_options))
+                        new_course=session_options[randIndex]
+                        meets_prereqs=schedule.add_session(new_course)
+                        if(meets_prereqs==False):
+                            schedule.drop_session(new_course)
+                            schedule.add_session(course)
+                            optimize_schedule(schedule)
+                else:
+                    break              
                         
         return schedule
