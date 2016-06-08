@@ -87,7 +87,7 @@ class Schedule:
                 if session.course == prereq and session.quarter < quarter:
                     prereqs_unmet -= 1
                     break
-        if len(prereqs_unmet) > 0:
+        if prereqs_unmet > 0:
             return False
         else:
             return True
@@ -100,7 +100,7 @@ class Schedule:
         quarter = 1
         #current quarter's credits
         creds = 0
-        while quarter <= maxQuarters:
+        while quarter <= self.maxQuarters:
             #getall the session in a given quarter
             sessions = self.get_sessions(quarter)
             #check if there are any sessions for said quarter. if there are, count the credits
@@ -111,7 +111,7 @@ class Schedule:
             #also check to make sure the session being added is at the current quarter or later
             if  (self.maxCreditsPerQuarter - creds) >= session.course.credits and session.get_quarter() >= quarter:
                 #now check if prereqs are fulfilled for the quarter being checked
-                if check_prereqs_bool(session.course, quarter):
+                if self.check_prereqs_bool(session.course, quarter):
                     #add to total credits fulfilled
                     self.creditsFulfilled += session.course.credits
                     #add session to schedule
