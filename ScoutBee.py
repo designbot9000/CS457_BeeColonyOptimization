@@ -42,18 +42,21 @@ class ScoutBee():
             while (attempts < MAX_SCOUT_ATTEMPTS) & (len(designated_schedule) > 0):
                 #select course to check  prereqs
                 course_to_evaluate = designated_schedule.popleft()
-                if new_schedule.check_prereqs(course_to_evaluate) == 0:
                     #only adding the 1st inputted session regardless of being the right quarter
                     i = 0
+                    #flag to make sure we have a successful insert
+                    success = False
                     while (i < len(course_to_evaluate.get_sessions())):
                         response = new_schedule.add_session(course_to_evaluate.get_sessions()[i])
                         if response == True:
+                            success = True
                             break
                         else:
                             i += 1  
-                else:
-                    designated_schedule.append(course_to_evaluate)
+                    if success == False:                        
+                        designated_schedule.append(course_to_evaluate)
                 attempts += 1
+            '''
             #print "adding new sched to list"
             #set the fitness for the sched
             new_schedule.check_fitness(4, 2, 1)  
@@ -72,6 +75,6 @@ class ScoutBee():
                 scout_schedules.put(new_schedule)
             else:
                 print "sched not enough credits {}".format(new_schedule.creditsFulfilled)
-                '''
+                
             iterations -= 1
 
