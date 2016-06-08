@@ -119,7 +119,7 @@ for item in optimum_schedule.get_schedule():
 def printGraph():
     #new graph
     plt.plot(fitnessLog)
-    plt.axis([0, len(fitnessLog), 0, 1])
+    plt.axis([0, len(fitnessLog), .3, .75])
     plt.title("best fitness for each iteration")
     plt.ylabel('fitness')
     plt.xlabel('iterations')

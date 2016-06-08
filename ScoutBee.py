@@ -11,6 +11,9 @@ Scout bee generates schedule (a possible solution) from randomly chosen lists
 scout_schedules = Queue.PriorityQueue()
 MAX_SCOUT_ATTEMPTS = 3000 
 
+prof_weight = 9
+time_to_complete_weight = 1
+avg_credits_per_q_weight = 6
 
 class ScoutBee():
     def __init__(self):
@@ -74,7 +77,7 @@ class ScoutBee():
             if new_schedule.creditsFulfilled >= 106:
                 print "adding new sched to list"
                 #set the fitness for the sched
-                new_schedule.check_fitness(4, 2, 1)  
+                new_schedule.check_fitness(prof_weight, time_to_complete_weight, avg_credits_per_q_weight)  
                 new_schedule.modified_by = "scout"
                 #sort new schedule based on time taken
                 new_schedule.sort()

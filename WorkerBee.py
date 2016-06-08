@@ -42,7 +42,7 @@ class WorkerBee():
                 MAX_ATTEMPTS=5
                 optimum_schedule=self.optimize_schedule(schedule,MAX_ATTEMPTS)
                 #place in ready queue for elites to pull from
-                optimum_schedule.check_fitness(4,2,1)
+                optimum_schedule.check_fitness(prof_weight, time_to_complete_weight, avg_credits_per_q_weight)
                 if optimum_schedule.creditsFulfilled >= 106:
                     '''
                     for course in optimum_schedule.get_schedule():
