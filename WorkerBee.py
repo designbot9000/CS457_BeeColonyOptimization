@@ -43,14 +43,17 @@ class WorkerBee():
                 optimum_schedule=self.optimize_schedule(schedule,MAX_ATTEMPTS)
                 #place in ready queue for elites to pull from
                 optimum_schedule.check_fitness(4,2,1)
-                for course in optimum_schedule.get_schedule():
-                    print course
-                
-                if optimum_schedule.fitness>optimum_fitness:
-                     scout_schedules.put(optimum_schedule)
+                if optimum_schedule.creditsFulfilled >= 106:
+                    for course in optimum_schedule.get_schedule():
+                        print course
+                    
+                    if optimum_schedule.fitness>optimum_fitness:
+                        scout_schedules.put(optimum_schedule)
+                    else:
+                         scout_schedules.put(schedule)
+                         scout_schedules.put(optimum_schedule)
                 else:
-                     scout_schedules.put(schedule)
-                     scout_schedules.put(optimum_schedule)
+                    scout_schedules.put(schedule) 
                     
                     
                

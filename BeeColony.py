@@ -6,7 +6,7 @@ from WorkerBee import *
 
 import time
 import random
-
+import matplotlib.pyplot as plt
 '''
 
 '''
@@ -24,6 +24,7 @@ optimum_schedule=None
 limit=0
 MAX_LIMIT=100
 count=0
+fitnessLog = list()
 
 #generate pop of classListPermutations
 classList=ListGen(classList_permutations)
@@ -46,7 +47,11 @@ while (optimum_fitness != 1.0) and (limit<MAX_LIMIT):
         workerRatio = 0.0
     else:
         #generate normal ratios
-        scoutRatio = (population_size + 0.0)/(scout_schedules.qsize() + 0.0)
+        if scout_schedules.qsize() > 0:
+            #scoutRatio = (population_size + 0.0)/(scout_schedules.qsize() + 0.0)
+            scoutRatio = 1-((scout_schedules.qsize() + 0.0)/(population_size + 0.0))
+            if scoutRatio < 0:
+                scoutRatio = 0
         remaining = 1.0-scoutRatio
         eliteRatio = (1-optimum_fitness)*remaining
         #pass
@@ -93,6 +98,7 @@ while (optimum_fitness != 1.0) and (limit<MAX_LIMIT):
             loop -= 1
         else:
             break
+    fitnessLog.append(optimum_fitness)
     print scout_schedules.qsize()
     while scheduleQueue.qsize()>0:
         scout_schedules.put(scheduleQueue.get(False))
@@ -106,7 +112,16 @@ print "optimum_schedule"
 print optimum_schedule.fitness
 for item in optimum_schedule.get_schedule():
         print item
-
+        
+def printGraph():
+    #new graph
+    plt.plot(fitnessLog)
+    plt.axis([0, len(fitnessLog), 0, 1])
+    plt.title("best fitness for each iteration")
+    plt.ylabel('fitness')
+    plt.xlabel('iterations')
+    plt.show()
+printGraph()
 #TODO - generate world (lists)
 
 #TODO - generate initial bee pop
