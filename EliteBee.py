@@ -21,7 +21,7 @@ class EliteBee():
         while self.iterations > 0:
             #check the total amount of credits taken
             selected_schedule=scout_schedules.get(False)
-                       
+            scout_schedules.put(selected_schedule)           
             # self.insert_schedule(selected_schedule);
             elite_schedules.append(selected_schedule)
             self.iterations -= 1
