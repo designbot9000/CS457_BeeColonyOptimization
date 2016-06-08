@@ -28,34 +28,37 @@ class Schedule:
             int: returns an int with higher numbers representing a higher satisfaction
             based on the provided weights.
         """
-        weightProfessor = weightProfessor + 0.0
-        weightCompletion = weightCompletion + 0.0
-        weightCredit = weightCredit + 0.0
-        total_score = 0
-        weight = weightProfessor + weightCompletion + weightCredit
-        complete_ = 0
-        prof_ = 0
-        credit_ = 0
+        if len(self.schedule) > 0:
+            weightProfessor = weightProfessor + 0.0
+            weightCompletion = weightCompletion + 0.0
+            weightCredit = weightCredit + 0.0
+            total_score = 0
+            weight = weightProfessor + weightCompletion + weightCredit
+            complete_ = 0
+            prof_ = 0
+            credit_ = 0
         
-        for item in self.schedule:
-            prof_ += item.get_professor().get_rating()
-            if item.get_quarter() > self.quarter:
-                self.quarter = item.get_quarter()
+            for item in self.schedule:
+                prof_ += item.get_professor().get_rating()
+                if item.get_quarter() > self.quarter:
+                    self.quarter = item.get_quarter()
                 
-        complete_ = (7 / (self.quarter + 0.0)) 
+            complete_ = (7 / (self.quarter + 0.0)) 
         
-        prof_ = ((prof_/len(self.schedule))/5.0 ) 
+            prof_ = ((prof_/len(self.schedule))/5.0 ) 
         
-        credit_ = (1/(((self.creditsFulfilled + 0.0) / (self.quarter + 0.0)) * 11.7777777777)) 
+            credit_ = (1/(((self.creditsFulfilled + 0.0) / (self.quarter + 0.0)) * 11.7777777777)) 
 
-        prof_ = prof_ * (weightProfessor/weight)
-        complete_ = complete_ * (weightCompletion/weight)
-        credit_ = credit_ * (weightCredit/weight)
+            prof_ = prof_ * (weightProfessor/weight)
+            complete_ = complete_ * (weightCompletion/weight)
+            credit_ = credit_ * (weightCredit/weight)
         
-        total_score = prof_ + credit_ + complete_
-        #print "total_score"
-        self.fitness = total_score#/1000
-        return total_score
+            total_score = prof_ + credit_ + complete_
+            #print "total_score"
+            self.fitness = total_score#/1000
+            return total_score
+        else:
+            return 0
 
     def check_prereqs(self, course):
         #checks to see if course has a prereq
