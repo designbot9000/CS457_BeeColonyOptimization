@@ -75,11 +75,14 @@ class ScoutBee():
                 print "adding new sched to list"
                 #set the fitness for the sched
                 new_schedule.check_fitness(4, 2, 1)  
+                new_schedule.modified_by = "scout"
                 #sort new schedule based on time taken
                 new_schedule.sort()
+                '''
                 s = new_schedule.schedule
                 for item in s:
                     print item
+                    '''
                 #add to Schedule queue
                 scout_schedules.put(new_schedule)
             else:

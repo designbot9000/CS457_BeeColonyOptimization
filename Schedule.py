@@ -13,6 +13,7 @@ class Schedule:
         self.creditsFulfilled = 0
         self.fitness = 0
         self.schedule = list()
+        self.modified_by = None
     def __lt__( self, other):
         return self.fitness > other.fitness
 

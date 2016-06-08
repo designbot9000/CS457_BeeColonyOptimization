@@ -44,8 +44,11 @@ class WorkerBee():
                 #place in ready queue for elites to pull from
                 optimum_schedule.check_fitness(4,2,1)
                 if optimum_schedule.creditsFulfilled >= 106:
+                    '''
                     for course in optimum_schedule.get_schedule():
                         print course
+                    '''
+                    optimum_schedule.modified_by = "worker"
                     
                     if optimum_schedule.fitness>optimum_fitness:
                         scout_schedules.put(optimum_schedule)
@@ -66,14 +69,29 @@ class WorkerBee():
                                      
                     if(random.random()>0.5):                        
                         session_options=classItem.course.get_sessions()                        
-                        schedule.drop_session(classItem)
-                        #choose random session from available sessions
-                        randIndex=random.randint(0,len(session_options)-1)
-                        new_class=session_options[randIndex]
-                        meets_prereqs=schedule.add_session(new_class)
-                        if(meets_prereqs==False):
-                            schedule.add_session(classItem)
-                            self.optimize_schedule(schedule,attempts-1)
+                        
+                        #choose random session from available sessions *** note this needs to switch with a session of the same quarter
+                        s_min = -1
+                        s_max = -1
+                        index = 0
+                        while index < len(session_options):
+                            if session_options[index].quarter == classItem.quarter and s_min != -1:
+                                s_min, s_max = index
+                            elif session_options[index].quarter == classItem.quarter:
+                                s_max = index
+                            index += 1
+                        if s_min > -1 and s_max > -1:
+                            schedule.drop_session(classItem)
+                            randIndex=random.randint(s_min,s_max)
+                            new_class=session_options[randIndex]
+                            meets_prereqs=schedule.add_session(new_class)
+                            '''
+                            if(meets_prereqs==False):
+                                schedule.add_session(classItem)
+                                self.optimize_schedule(schedule,attempts-1)
+                                '''
+                        else:
+                            break
                 else:
                     break              
                         
