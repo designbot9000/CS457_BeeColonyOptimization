@@ -36,31 +36,41 @@ class WorkerBee():
                 break
             else:
                 index=random.randint(0,selection_size-1)
-                schedule=elite_schedules[index]        
-                #optimize the schedule
-                optimum_schedule=optimize_schedule(schedule)
+                schedule=elite_schedules[index]   
+                
+                #generate a schedule
+                MAX_ATTEMPTS=5
+                optimum_schedule=self.optimize_schedule(schedule,MAX_ATTEMPTS)
                 #place in ready queue for elites to pull from
-                optimum_schedule.check_fitness(4,2,1)
-                scout_schedules.append(optimum_schedule)
+                optimum_schedule.check_fitness(4,3,2,1)
+                for course in optimum_schedule.get_schedule():
+                    print course
+                
+                if optimum_schedule.fitness>optimum_fitness:
+                     scout_schedules.put(optimum_schedule)
+                else:
+                     scout_schedules.put(schedule)
+                     scout_schedules.put(optimum_schedule)
+                    
+                    
+               
                 self.iterations-=1
     
-    def optimize_schedule(schedule):
+    def optimize_schedule(self,schedule,attempts):
         global optimum_fitness
-        attempts=0
-        for course in schedule:
-                if(attempts<MAX_ATTEMPTS):
-                    schedule.sort()
-                    if(random.random()>0.5):
-                        session_options=course.get_sessions()
-                        schedule.drop_session(course)
+        for classItem in schedule.get_schedule():
+                if(attempts>=0):
+                                     
+                    if(random.random()>0.5):                        
+                        session_options=classItem.course.get_sessions()                        
+                        schedule.drop_session(classItem)
                         #choose random session from available sessions
-                        randIndex=random.randint(0,len(session_options))
-                        new_course=session_options[randIndex]
-                        meets_prereqs=schedule.add_session(new_course)
+                        randIndex=random.randint(0,len(session_options)-1)
+                        new_class=session_options[randIndex]
+                        meets_prereqs=schedule.add_session(new_class)
                         if(meets_prereqs==False):
-                            schedule.drop_session(new_course)
-                            schedule.add_session(course)
-                            optimize_schedule(schedule)
+                            schedule.add_session(classItem)
+                            self.optimize_schedule(schedule,attempts-1)
                 else:
                     break              
                         
