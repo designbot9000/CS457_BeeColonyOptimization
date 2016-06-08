@@ -40,7 +40,7 @@ class WorkerBee():
                 #optimize the schedule
                 optimum_schedule=optimize_schedule(schedule)
                 #place in ready queue for elites to pull from
-                optimum_schedule.check_fitness(4,3,2,1)
+                optimum_schedule.check_fitness(4,2,1)
                 scout_schedules.append(optimum_schedule)
                 self.iterations-=1
     

@@ -56,7 +56,7 @@ class ScoutBee():
                 attempts += 1
             #print "adding new sched to list"
             #set the fitness for the sched
-            new_schedule.check_fitness(4, 3, 2, 1)  
+            new_schedule.check_fitness(4, 2, 1)  
             #sort new schedule based on time taken
             new_schedule.sort()
             #add to Schedule queue
@@ -65,7 +65,7 @@ class ScoutBee():
             if new_schedule.creditsFulfilled >= 106:
                 print "adding new sched to list"
                 #set the fitness for the sched
-                new_schedule.check_fitness(4, 3, 2, 1)  
+                new_schedule.check_fitness(4, 2, 1)  
                 #sort new schedule based on time taken
                 new_schedule.sort()
                 #add to Schedule queue

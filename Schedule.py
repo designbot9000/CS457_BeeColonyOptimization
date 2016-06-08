@@ -16,12 +16,11 @@ class Schedule:
     def __lt__( self, other):
         return self.fitness > other.fitness
 
-    def check_fitness(self, weightProfessor, weightCourse, weightCompletion, weightCredit):
+    def check_fitness(self, weightProfessor, weightCompletion, weightCredit):
         """Check the fitness of the current configuration
 
         Args:
             weightProfessor (int): How important is the professor rating
-            weightCourse (int): How important is the class's rating
             weightCompletion (int): How important is finishing faster
             weightCredit (int): How important is having a low credit load
 
@@ -30,22 +29,31 @@ class Schedule:
             based on the provided weights.
         """
         weightProfessor = weightProfessor + 0.0
-        weightCourse = weightCourse + 0.0
         weightCompletion = weightCompletion + 0.0
         weightCredit = weightCredit + 0.0
         total_score = 0
-        weight = weightProfessor + weightCompletion
+        weight = weightProfessor + weightCompletion + weightCredit
+        complete_ = 0
         prof_ = 0
-        course_ = 0
-        complete_ = (self.creditsFulfilled +0.0)/(REQUIRED_CREDITS +0.0)*(weightCompletion/weight)
         credit_ = 0
         
         for item in self.schedule:
             prof_ += item.get_professor().get_rating()
-        prof_ = ((prof_/len(self.schedule))/5.0 )*(weightProfessor/weight)
-        #print "prof {}".format(prof_)
-        #print "complete {}".format(complete_)
-        total_score = prof_+complete_
+            if item.get_quarter() > self.quarter:
+                self.quarter = item.get_quarter()
+                
+        complete_ = (7 / (self.quarter + 0.0)) 
+        
+        prof_ = ((prof_/len(self.schedule))/5.0 ) 
+        
+        credit_ = (1/(((self.creditsFulfilled + 0.0) / (self.quarter + 0.0)) * 11.7777777777)) 
+
+        prof_ = prof_ * (weightProfessor/weight)
+        complete_ = complete_ * (weightCompletion/weight)
+        credit_ = credit_ * (weightCredit/weight)
+        
+        total_score = prof_ + credit_ + complete_
+        #print "total_score"
         self.fitness = total_score#/1000
         return total_score
 
