@@ -12,6 +12,7 @@ class EliteBee():
     
     def __init__(self):
         self.iterations = 0
+        self.elite_schedules=[]
 
     def run(self, iterations):
         global scout_schedules
@@ -20,17 +21,8 @@ class EliteBee():
         while self.iterations > 0:
             #check the total amount of credits taken
             selected_schedule=scout_schedules.get(False)
-            #selected_schedule.check_fitness()            
-            self.insert_schedule(selected_schedule);
+                       
+            # self.insert_schedule(selected_schedule);
+            elite_schedules.append(selected_schedule)
             self.iterations -= 1
-    
-    def insert_schedule(self,schedule):
-        #checks if selected schedule is higher fitness than the next schedule, and inserts it
-        elite_schedules
-        index=0
-        for item in elite_schedules:
-            if(schedule.fitness<item.fitness):
-                index+=1
-            else:
-                insert(index,self.elite_schedule)
     
